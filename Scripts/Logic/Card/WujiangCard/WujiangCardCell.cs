@@ -73,15 +73,16 @@ public class WujiangCardCell : BaseUIForms
 
     private void onCardLevelChange(KeyValueUpdate kv)
     {
-        Dictionary<int, int> value = kv.Values as Dictionary<int, int>;
-        //int level = (int)kv.Values;
+        object[] value = kv.Values as object[];
+        int id = (int)value[0];
+        int level = (int)value[1];
         if(style == CardShowStyle.Normal || style == CardShowStyle.HideName)
         {
             if (Level)
             {
-                if (value.ContainsKey(data.ID))
+                if (id == data.ID)
                 {
-                    Level.text = "Lv." + value.TryGet(data.ID); ;
+                    Level.text = "Lv." + level;
                 }
             }
         }

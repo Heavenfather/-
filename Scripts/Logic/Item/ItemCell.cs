@@ -46,6 +46,14 @@ public class ItemCell : BaseUIForms
         }
     }
 
+    public void UpdateShowNum(int id,int showNum)
+    {
+        if (id == celldata.ID)
+        {
+            num.text = showNum + "";
+        }
+    }
+        
 
 
 }
