@@ -71,8 +71,10 @@ public class InBattleCardDetailPanel : BaseUIForms
 
         AudioManager.GetInstance().PlayEffectSound(106);
 
+        int attNum = CardManager.GetInstance().GetLocalCardAttributeNum(data.IconId);
+
         //提示加成的属性
-        string showText=CardManager.GetInstance().GetAttributeNameById(Convert.ToInt32(data.Attribute.Split(':')[0]))+"+"+ data.Attribute.Split(':')[1];
+        string showText = CardManager.GetInstance().GetAttributeNameById(Convert.ToInt32(data.Attribute.Split(':')[0])) + "+" + attNum;
         UIManager.GetInstance().ShowTip(showText);
 
         //关于战斗的处理
@@ -85,15 +87,17 @@ public class InBattleCardDetailPanel : BaseUIForms
                 if (Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.Attack))
                 {
                     //攻击
-                    ai.SoldierAttack += Convert.ToInt32(data.Attribute.Split(':')[1]);
-                }else if(Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.Defence))
+                    ai.SoldierAttack += attNum;
+                }
+                else if(Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.Defence))
                 {
                     //防御
-                    ai.SoldierDefence += Convert.ToInt32(data.Attribute.Split(':')[1]);
-                }else if(Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.HP))
+                    ai.SoldierDefence += attNum;
+                }
+                else if(Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.HP))
                 {
                     //血量
-                    ai.FloCurrentHealth += Convert.ToInt32(data.Attribute.Split(':')[1]);
+                    ai.FloCurrentHealth += attNum;
                     if (ai.FloCurrentHealth > ai.IntMaxHealth)
                     {
                         ai.FloCurrentHealth = ai.IntMaxHealth;
@@ -102,7 +106,7 @@ public class InBattleCardDetailPanel : BaseUIForms
                 else if(Convert.ToInt32(data.Attribute.Split(':')[0]) == Convert.ToInt32(AttributeType.SkillAttack))
                 {
                     //技能攻击系数
-                    ai.SkillHurtPower += Convert.ToInt32(data.Attribute.Split(':')[1]);                    
+                    ai.SkillHurtPower += attNum;
                 }
             }
         }
@@ -118,9 +122,10 @@ public class InBattleCardDetailPanel : BaseUIForms
         cell.GetComponent<WujiangCardCell>().style = CardShowStyle.Normal;
 
         string attributeName = CardManager.GetInstance().GetAttributeNameById(Convert.ToInt32(data.Attribute.Split(':')[0]));
-        string num = CardManager.GetInstance().GetAttributeNum(Convert.ToInt32(data.Attribute.Split(':')[0]), Convert.ToInt32(data.Attribute.Split(':')[1]));
+        //string num = CardManager.GetInstance().GetAttributeNum(Convert.ToInt32(data.Attribute.Split(':')[0]), Convert.ToInt32(data.Attribute.Split(':')[1]));
+        int num = CardManager.GetInstance().GetLocalCardAttributeNum(data.IconId);
         string des = CardManager.GetInstance().GetAttributeDes(Convert.ToInt32(data.Attribute.Split(':')[0]));
-        string newdes = des.Replace("{parameter}", data.Attribute.Split(':')[1]);
+        string newdes = des.Replace("{parameter}", num+"");
         InBattleDescribe.text= attributeName + "   +" + num + '\n' + newdes;
     }
 }

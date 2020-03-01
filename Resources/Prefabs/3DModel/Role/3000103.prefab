@@ -1778,7 +1778,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100100}
   m_LocalRotation: {x: 0, y: -0.99827075, z: 0, w: 0.058783725}
-  m_LocalPosition: {x: 43.3, y: 0.7, z: 77.5}
+  m_LocalPosition: {x: 81.3, y: 0, z: 59}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 400098}
@@ -1882,7 +1882,7 @@ MonoBehaviour:
   SoldierDefence: 150
   IntMaxHealth: 4500
   FloCurrentHealth: 4500
-  SkillHurtPower: 5
+  SkillHurtPower: 6
   DestroyTime: 3
   HPSlider: {fileID: 6554707212910540440}
 --- !u!1001 &8130483254641429933
