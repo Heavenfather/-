@@ -17,4 +17,16 @@ public class AttributeChangeCell : BaseUIForms
         CurNum.text = celldata.CurrentAttNum + "";
         NextNum.text = celldata.NextAttNum + "";
     }
+
+    /// <summary>
+    /// 换值
+    /// </summary>
+    /// <param name="oldNum"></param>
+    /// <param name="newNum"></param>
+    public void ChangeAttribute(int oldNum,int newNum)
+    {
+        CurNum.text = oldNum + "";
+        NextNum.text = newNum + "";
+    }
+
 }

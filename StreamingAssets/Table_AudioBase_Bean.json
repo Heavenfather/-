@@ -63,6 +63,14 @@
     "loop":0,
     "type":2,
     "none":"通用的点击"
+  },
+  "107":
+  {
+    "ID":107,
+    "Name":"CardUpgradeSccess",
+    "loop":0,
+    "type":2,
+    "none":"卡牌升级成功"
   }
    }
 }

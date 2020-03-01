@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TableConfigs;
 
 public class WujiangUpgradePanel : BaseUIForms
 {
@@ -20,6 +21,9 @@ public class WujiangUpgradePanel : BaseUIForms
     private WujiangData celldata;
     private WujiangData CurSelectData; //自动选中第一个
 
+    private List<GameObject> attGos = new List<GameObject>();
+    private List<GameObject> itemsGo = new List<GameObject>();
+
     private void Awake()
     {
         base.CurrentUIType.UIForm_ShowMode = UIFormShowMode.ReverseChange;
@@ -32,7 +36,44 @@ public class WujiangUpgradePanel : BaseUIForms
         });
 
         RegisterButtonEvent(BtnUpgrade, OnUpgradeClick);
-        
+
+        ReceiveMessage(SysDefine.CardUpgrade, onCardUpgradeSuccess);
+    }
+
+    void onCardUpgradeSuccess(KeyValueUpdate kv)
+    {
+        object[] value = kv.Values as object[];
+        int id = (int)value[0];
+        int level = (int)value[1];
+        CardLevel.text = "Lv." + level;
+
+        //更新属性行
+        string[] allAtt = CardManager.GetInstance().GetAttribute(CurSelectData.ID).Split(';');
+        for (int i = 0; i < allAtt.Length; i++)
+        {
+            int attID = Convert.ToInt32(allAtt[i].Split(':')[0]);
+            int attNum = Convert.ToInt32(allAtt[i].Split(':')[1]);
+            Table_WujiangUpgrade_DefineData record = TableManager.GetInstance().GetDataById("WujiangUpgrade", CurSelectData.ID) as Table_WujiangUpgrade_DefineData;
+
+            AttributeChangeCell cell = attGos[i].GetComponent<AttributeChangeCell>();
+
+            int oldNum = attNum + (level - 1) * record.UpgradeCoe + record.BasicNum;
+            int newNum = attNum + level * record.UpgradeCoe + record.BasicNum;
+
+            cell.ChangeAttribute(oldNum, newNum);
+        }
+
+        //更新材料
+        string[] stuffs = CardManager.GetInstance().GetComsumeStuffs(CurSelectData.ID).Split(';');
+        for (int i = 0; i < stuffs.Length; i++)
+        {
+            int itemID = Convert.ToInt32(stuffs[i].Split(',')[0]);
+            int itemNum = Convert.ToInt32(stuffs[i].Split(',')[1]);
+
+            int comsumeNum = itemNum * CurSelectData.Quantity + level;
+
+            itemsGo[i].GetComponent<ItemCell>().UpdateShowNum(itemID, comsumeNum);
+        }
     }
 
     private void OnUpgradeClick(object args)
@@ -63,6 +104,7 @@ public class WujiangUpgradePanel : BaseUIForms
         int newLevel = oldLevel + 1;
         CardManager.GetInstance().UpgradeCardLevel(CurSelectData.ID, newLevel);
 
+        AudioManager.GetInstance().PlayEffectSound(107);
     }
 
     private void OnEnable()
@@ -91,12 +133,14 @@ public class WujiangUpgradePanel : BaseUIForms
             celldata = data;
             if (i == 0)
                 CurSelectData = celldata;
-
+            data.Level = CardManager.GetInstance().GetSaveCardLevel(data.IconId);
             EventTriggerListener.Get(go.GetComponent<WujiangCardCell>().icon.gameObject, data).onClick = OnCellClick;
             go.transform.SetParent(GridLayout.transform);
             go.transform.localScale = Vector3.one;
             go.GetComponent<WujiangCardCell>().data = data;
             go.GetComponent<WujiangCardCell>().style = CardShowStyle.HideName;
+
+            
         }
     }
 
@@ -108,6 +152,9 @@ public class WujiangUpgradePanel : BaseUIForms
         CardName.text = data.Name;
         int level = CardManager.GetInstance().GetSaveCardLevel(data.ID);
         CardLevel.text = "Lv."+ level;
+
+        attGos = new List<GameObject>();
+        itemsGo = new List<GameObject>();
 
         for (int i = 0; i < AttributeGridLayout.transform.childCount; i++)
         {
@@ -131,18 +178,19 @@ public class WujiangUpgradePanel : BaseUIForms
             GameObject go = GetComponent<GameObject>();
             go = Instantiate(AttributeCell);
             AttributeChangeCellData attCellData = new AttributeChangeCellData();
+            Table_WujiangUpgrade_DefineData record = TableManager.GetInstance().GetDataById("WujiangUpgrade", CurSelectData.ID) as Table_WujiangUpgrade_DefineData;
             attCellData.Name = strAttName;
-            attCellData.CurrentAttNum = attNum * level;
-            attCellData.NextAttNum = attNum * (level + 1);
+            attCellData.CurrentAttNum = attNum + level * record.UpgradeCoe + record.BasicNum;
+            attCellData.NextAttNum = attNum + (level+1) * record.UpgradeCoe + record.BasicNum;
             go.GetComponent<AttributeChangeCell>().celldata = attCellData;
             go.transform.SetParent(AttributeGridLayout.transform);
             go.transform.localScale = Vector3.one;
-
+            attGos.Add(go);
         }
 
         //消耗材料
         string[] stuffs = CardManager.GetInstance().GetComsumeStuffs(data.ID).Split(';');
-        for (int i = 0; i < allAttribute.Length; i++)
+        for (int i = 0; i < stuffs.Length; i++)
         {
             int itemID = Convert.ToInt32(stuffs[i].Split(',')[0]);
             int itemNum = Convert.ToInt32(stuffs[i].Split(',')[1]);
@@ -156,7 +204,7 @@ public class WujiangUpgradePanel : BaseUIForms
             go.GetComponent<ItemCell>().celldata = itemdata;
             go.transform.SetParent(StuffGridLayout.transform);
             go.transform.localScale = Vector3.one;
-
+            itemsGo.Add(go);
         }
     }
 

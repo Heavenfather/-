@@ -139,6 +139,8 @@ public class AudioManager : MonoBehaviour
         DOTween.To(() => musicAudioSource.volume, value => musicAudioSource.volume = value, 0, 0.5f).OnComplete(() =>
         {
             musicAudioSource.clip = GetAudioClip(id);
+            if (!musicAudioSource.clip)
+                return;
             musicAudioSource.clip.LoadAudioData();
             musicAudioSource.loop = SoundIsLoop(id);
             musicAudioSource.volume = bgSoundVolume;
@@ -158,6 +160,8 @@ public class AudioManager : MonoBehaviour
             //有闲置的音源从那里面拿然后放到正在使用的里面
             AudioSource audioSource = UnusedToUsed();
             audioSource.clip = GetAudioClip(id);
+            if (!audioSource.clip)
+                return;
             audioSource.clip.LoadAudioData();
             audioSource.Play();
             StartCoroutine(WaitPlayEnd(audioSource, action));
@@ -167,6 +171,8 @@ public class AudioManager : MonoBehaviour
             AddAudioSource();
             AudioSource audioSource = UnusedToUsed();
             audioSource.clip = GetAudioClip(id);
+            if (!audioSource.clip)
+                return;
             audioSource.clip.LoadAudioData();
             audioSource.volume = effectSoundVolume;
             audioSource.loop = false;   //音效设死为不能循环

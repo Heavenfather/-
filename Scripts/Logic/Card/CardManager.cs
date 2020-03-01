@@ -307,9 +307,12 @@ public class CardManager
     public void UpgradeCardLevel(int cardId,int upLevel)
     {
         GameDataManager.GetInstance().SaveCardDataLevel(GameDataManager.UserAccount + "", cardId, upLevel);
-        Dictionary<int, int> value = new Dictionary<int, int>();
-        value.Add(cardId, upLevel);
-        MessageCenter.SendMessage(SysDefine.CardUpgrade, new KeyValueUpdate(SysDefine.CardUpgrade, value));
+        object[] objs = new object[2];
+        objs[0] = cardId;
+        objs[1] = upLevel;
+        //Dictionary<int, int> value = new Dictionary<int, int>();
+        //value.Add(cardId, upLevel);
+        MessageCenter.SendMessage(SysDefine.CardUpgrade, new KeyValueUpdate(SysDefine.CardUpgrade, objs));
 
     }
 
