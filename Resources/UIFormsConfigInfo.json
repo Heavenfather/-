@@ -1,0 +1,95 @@
+﻿{
+"ConfigInfo":
+[
+  {"Key":"UI界面的定义"},
+  {
+    "Key": "LoadingPanel",
+    "Value": "Prefabs\\UI\\Login\\LoadingPanel"
+  },
+  {
+    "Key": "AccountPanel",
+    "Value": "Prefabs\\UI\\Login\\AccountPanel"
+  },
+  {
+    "Key": "RegisterPanel",
+    "Value": "Prefabs\\UI\\Login\\RegisterPanel"
+  },
+  {
+    "Key": "MainCityPanel",
+    "Value": "Prefabs\\UI\\MainCity\\MainCityPanel"
+  },
+  {
+    "Key": "MasterMansionPanel",
+    "Value": "Prefabs\\UI\\MainCity\\MasterMansionPanel"
+  },
+  {
+    "Key": "RoleDetailPanel",
+    "Value": "Prefabs\\UI\\MainCity\\RoleDetailPanel"
+  },
+  {
+    "Key": "DeleteDataPanel",
+    "Value": "Prefabs\\UI\\MainCity\\DeleteDataPanel"
+  },
+  {
+    "Key": "BattleSelectPanel",
+    "Value": "Prefabs\\UI\\CheckPoint\\BattleSelectPanel"
+  },
+  {
+    "Key": "CheckPointDetailPanel",
+    "Value": "Prefabs\\UI\\CheckPoint\\CheckPointDetailPanel"
+  },
+  {
+    "Key": "IsPassedPanel",
+    "Value": "Prefabs\\UI\\CheckPoint\\IsPassedPanel"
+  },
+  {
+    "Key": "WujiangCardDetailPanel",
+    "Value": "Prefabs\\UI\\Card\\WujiangCardDetailPanel"
+  },
+  {
+    "Key": "WujiangUpgradePanel",
+    "Value": "Prefabs\\UI\\Card\\WujiangUpgradePanel"
+  },
+  {
+    "Key": "IntoBattleCardPanel",
+    "Value": "Prefabs\\UI\\Battle\\IntoBattleCardPanel"
+  },
+  {
+    "Key": "BattleFailPanel",
+    "Value": "Prefabs\\UI\\Battle\\BattleFailPanel"
+  },
+  {
+    "Key": "BattleWinPanel",
+    "Value": "Prefabs\\UI\\Battle\\BattleWinPanel"
+  },
+  {
+    "Key": "AddSodilerTipsPanel",
+    "Value": "Prefabs\\UI\\Battle\\AddSodilerTipsPanel"
+  },
+  {
+    "Key": "InBattleCardDetailPanel",
+    "Value": "Prefabs\\UI\\Battle\\InBattleCardDetailPanel"
+  },
+  {
+    "Key": "LoginPanel",
+    "Value": "Prefabs\\UI\\Login\\LoginPanel"
+  },
+  {
+    "Key": "ShopPanel",
+    "Value": "Prefabs\\UI\\Shop\\ShopPanel"
+  },
+  {
+    "Key": "ConfirmBuyPanel",
+    "Value": "Prefabs\\UI\\Shop\\ConfirmBuyPanel"
+  },
+  {
+    "Key": "ItemCellDetailPanel",
+    "Value": "Prefabs\\UI\\Item\\ItemCellDetailPanel"
+  },
+  {
+    "Key": "PackPanel",
+    "Value": "Prefabs\\UI\\Item\\PackPanel"
+  }
+]
+
+}
