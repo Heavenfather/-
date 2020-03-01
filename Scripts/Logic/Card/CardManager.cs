@@ -295,7 +295,8 @@ public class CardManager
     public int GetSaveCardLevel(int cardid)
     {
         CardBaseData data = GameDataManager.GetInstance().GetCardData(GameDataManager.UserAccount + "", cardid);
-
+        if (data == null)
+            return 0;
         return data.Level;
     }
 
@@ -314,6 +315,24 @@ public class CardManager
         //value.Add(cardId, upLevel);
         MessageCenter.SendMessage(SysDefine.CardUpgrade, new KeyValueUpdate(SysDefine.CardUpgrade, objs));
 
+    }
+
+    public int GetLocalCardAttributeNum(int cardid)
+    {
+        int level = GetSaveCardLevel(cardid);
+        Table_WujiangUpgrade_DefineData record = TableManager.GetInstance().GetDataById("WujiangUpgrade", cardid) as Table_WujiangUpgrade_DefineData;
+        int result = 0;
+        string att = GetAttribute(cardid);
+        if(level == 0)
+        {
+            result = Convert.ToInt32(att.Split(':')[1]);
+        }
+        else
+        {
+            result= Convert.ToInt32(att.Split(':')[1]) + level * record.UpgradeCoe + record.BasicNum;
+        }
+        
+        return result;
     }
 
     /// <summary>

@@ -67,8 +67,9 @@ public class WujiangCardDetailPanel : BaseUIForms
         string name = CardManager.GetInstance().GetAttributeNameById(Convert.ToInt32(data.Attribute.Split(':')[0]));
         string num = CardManager.GetInstance().GetAttributeNum(Convert.ToInt32(data.Attribute.Split(':')[0]), Convert.ToInt32(data.Attribute.Split(':')[1]));
         string des = CardManager.GetInstance().GetAttributeDes(Convert.ToInt32(data.Attribute.Split(':')[0]));
-        string newdes = des.Replace("{parameter}", data.Attribute.Split(':')[1]);
-        AttributeDes.text = name + "   +" + num + '\n' + newdes;
+        //string newdes = des.Replace("{parameter}", data.Attribute.Split(':')[1]);
+        string newdes = des.Replace("{parameter}", CardManager.GetInstance().GetLocalCardAttributeNum(data.ID)+"");
+        AttributeDes.text = name + "   +" + CardManager.GetInstance().GetLocalCardAttributeNum(data.ID) + '\n' + newdes;
 
         if (type == ShowCardDetailEume.IntoBattle)
         {
